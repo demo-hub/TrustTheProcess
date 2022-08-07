@@ -20,7 +20,12 @@ const Card = ({
             : "bg-purple-100"
         }`}
       >
-        <h2 className="text-lg text-gray-700">{name}</h2>
+        <h2 className="text-lg text-gray-700">
+          {name}{" "}
+          {unavailable ? (
+            <span className="italic text-purple-500">Coming Soon</span>
+          ) : null}
+        </h2>
         <p className="text-sm text-gray-600">{description}</p>
         <a
           className="mt-3 text-sm underline text-violet-500 decoration-dotted underline-offset-2"

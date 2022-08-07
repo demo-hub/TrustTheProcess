@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const TopNavbar = () => {
   return (
-    <div className="flex border-b-2 border-grey-500 items-center">
+    <div className="flex border-b-2 border-grey-500 items-center fixed w-full">
       <span className="font-bold p-2 text-gray-700">
         Trust the{" "}
         <span className="text-purple-300 italic tracking-wider">Process</span>
