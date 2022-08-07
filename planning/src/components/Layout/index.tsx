@@ -1,7 +1,7 @@
 import TopNavbar from "@components/TopNavbar";
 import Head from "next/head";
 
-const Layout = ({ children }) => {
+const Layout = ({ children }: { children: JSX.Element }) => {
   return (
     <>
       <Head>
