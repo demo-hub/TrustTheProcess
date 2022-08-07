@@ -1,2 +1,2 @@
-# AgilePlanning
-Website for your scrum planning sessions
+# Trust The Process
+Website for your planning sessions
