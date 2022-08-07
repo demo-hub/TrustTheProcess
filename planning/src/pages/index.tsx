@@ -29,6 +29,8 @@ const Home: NextPage = () => {
             documentation="https://www.techagilist.com/agile/scrum/bucket-system-agile-estimation-method/"
             unavailable
           />
+        </div>
+        <div className="pt-3 mt-3 text-center">
           <Card
             name="Three-Point Method"
             description="User stories (items) are estimated using a three-point method"
