@@ -1,12 +1,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Card from "../components/Card";
-import TopNavbar from "../components/TopNavbar";
-import { trpc } from "../utils/trpc";
+import Card from "@components/Card";
+import TopNavbar from "@components/TopNavbar";
 
 const Home: NextPage = () => {
-  const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
-
   return (
     <>
       <Head>
@@ -38,9 +35,6 @@ const Home: NextPage = () => {
             documentation="https://tailwindcss.com/"
             unavailable
           />
-        </div>
-        <div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full">
-          {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading...</p>}
         </div>
       </main>
     </>
