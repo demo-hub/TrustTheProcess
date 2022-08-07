@@ -8,15 +8,12 @@ const TopNavbar = () => {
         <span className="text-purple-300 italic tracking-wider">Process</span>
       </span>
       <div className="ml-auto mr-1 text-gray-700">
-        <button
-          onClick={() =>
-            window.location.assign("https://github.com/demo-hub/AgilePlanning")
-          }
-          className="p-1"
-        >
-          <Image alt="" src="/github_icon.png" width="16" height="16" /> Check
-          the code
-        </button>
+        <a href="https://github.com/demo-hub/AgilePlanning">
+          <button className="p-1">
+            <Image alt="" src="/github_icon.png" width="16" height="16" /> Check
+            the code
+          </button>
+        </a>
       </div>
     </div>
   );
