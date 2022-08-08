@@ -26,7 +26,7 @@ const SettingsForm = () => {
       <select
         value={formik.values.sequence}
         onChange={formik.handleChange}
-        className="block"
+        className="block w-full"
         name="sequence"
         id="sequence"
       >
