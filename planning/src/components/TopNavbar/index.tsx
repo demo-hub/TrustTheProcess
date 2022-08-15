@@ -14,13 +14,22 @@ const TopNavbar = () => {
           </span>
         </a>
       </Link>
-      <div className="ml-auto mr-1 text-gray-700">
+      <div className="ml-auto mr-2 text-gray-700">
         <a href="https://github.com/demo-hub/AgilePlanning">
-          <button className="p-1">
+          <button className="p-1 mr-2">
             <Image alt="" src="/github_icon.png" width="16" height="16" /> Check
             the code
           </button>
         </a>
+        <span className="text-gray-700">
+          Created with{" "}
+          <a
+            className="text-purple-300 underline font-bold"
+            href="https://github.com/t3-oss/create-t3-app"
+          >
+            T3
+          </a>
+        </span>
       </div>
     </div>
   );
