@@ -1,9 +1,18 @@
 import SettingsForm from "@components/SettingsForm";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { trpc } from "../../utils/trpc";
 
 const PokerSettings: NextPage = () => {
   const mutation = trpc.useMutation(["room.create"]);
+
+  const router = useRouter();
+  useEffect(() => {
+    if (mutation.data && !mutation.error) {
+      router.push(`/room/${mutation.data.id}`);
+    }
+  }, [mutation.data, mutation.error, router]);
 
   const onSubmit = (values: { name: string; sequence: string }) => {
     mutation.mutate(values);
@@ -15,10 +24,9 @@ const PokerSettings: NextPage = () => {
         Pick your <span className="text-purple-300">Settings</span>
       </h1>
       <SettingsForm onSubmit={onSubmit} />
-      {mutation.error && (
+      {mutation.error ? (
         <div className="text-red-500">{mutation.error.message}</div>
-      )}
-      <p>{JSON.stringify(mutation.data)}</p>
+      ) : undefined}
     </>
   );
 };
