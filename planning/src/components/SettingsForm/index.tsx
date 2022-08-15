@@ -35,12 +35,14 @@ const SettingsForm = () => {
         <option value="2">Sequential</option>
       </select>
 
-      <button
-        className="bg-purple-300 text-lg font-bold text-white p-1.5 rounded"
-        type="submit"
-      >
-        Submit
-      </button>
+      <div className="text-center">
+        <button
+          className="bg-purple-300 text-lg font-bold text-white py-1.5 px-2.5 rounded"
+          type="submit"
+        >
+          Submit
+        </button>
+      </div>
     </form>
   );
 };
