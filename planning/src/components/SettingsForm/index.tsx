@@ -1,13 +1,22 @@
 import { useFormik } from "formik";
+import * as Yup from "yup";
 
-const SettingsForm = () => {
+type SettingsProps = {
+  onSubmit: (values: any) => void;
+};
+
+const SettingsForm = ({ onSubmit }: SettingsProps) => {
   const formik = useFormik({
     initialValues: {
       name: "",
       sequence: "",
     },
+    validationSchema: Yup.object().shape({
+      name: Yup.string().required("Name is required"),
+      sequence: Yup.string().required("Sequence is required"),
+    }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      onSubmit(values);
     },
   });
 
