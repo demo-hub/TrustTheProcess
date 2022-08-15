@@ -1,13 +1,12 @@
 import type { NextPage } from "next";
 import Card from "@components/Card";
 import Link from "next/link";
+import PageTitle from "@components/PageTitle";
 
 const Home: NextPage = () => {
   return (
     <>
-      <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
-        Pick your <span className="text-purple-300">Poison</span>
-      </h1>
+      <PageTitle title="Pick your" highlighted="Method" />
       <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-2">
         <Link href="/poker/settings">
           <a>

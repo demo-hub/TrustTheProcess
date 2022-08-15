@@ -1,3 +1,4 @@
+import PageTitle from "@components/PageTitle";
 import SettingsForm from "@components/SettingsForm";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -20,9 +21,7 @@ const PokerSettings: NextPage = () => {
 
   return (
     <>
-      <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
-        Pick your <span className="text-purple-300">Settings</span>
-      </h1>
+      <PageTitle title="Pick your" highlighted="Settings" />
       <SettingsForm onSubmit={onSubmit} />
       {mutation.error ? (
         <div className="text-red-500">{mutation.error.message}</div>
