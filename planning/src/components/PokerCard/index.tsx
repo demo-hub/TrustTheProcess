@@ -4,7 +4,7 @@ type PokerCardProps = {
 
 const PokerCard = ({ value }: PokerCardProps) => {
   return (
-    <div className="p-6 border border-gray-500 rounded cursor-pointer shadow-xl motion-safe:hover:scale-105">
+    <div className="p-6 border border-gray-500 rounded cursor-pointer shadow-xl motion-safe:hover:scale-105 text-center">
       <span className="text-purple-300 font-bold text-2xl">{value}</span>
     </div>
   );
