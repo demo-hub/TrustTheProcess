@@ -1,23 +1,19 @@
-import { useState } from "react";
-
 type PokerCardProps = {
   value: number;
+  selected: boolean;
+  onClick?: () => void;
 };
 
-const PokerCard = ({ value }: PokerCardProps) => {
-  const [isSelected, setIsSelected] = useState(false);
-
+const PokerCard = ({ value, selected, onClick }: PokerCardProps) => {
   return (
     <div
-      className={`p-6 border border-gray-500 rounded cursor-pointer shadow-xl motion-safe:hover:scale-105 text-center ${
-        isSelected ? "bg-purple-100 scale-105" : ""
+      className={`p-12 border border-gray-500 rounded cursor-pointer shadow-xl motion-safe:hover:scale-105 text-center ${
+        selected ? "bg-purple-100 scale-105" : ""
       }`}
-      onClick={() => setIsSelected((prev) => !prev)}
+      onClick={() => onClick?.()}
     >
       <span
-        className={`text-purple-${
-          isSelected ? "500" : "300"
-        } font-bold text-2xl`}
+        className={`text-purple-${selected ? "500" : "300"} font-bold text-6xl`}
       >
         {value}
       </span>
