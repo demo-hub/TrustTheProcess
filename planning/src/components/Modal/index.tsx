@@ -1,3 +1,6 @@
+import Button from "@components/Button";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
 type ModalProps = {
   children: JSX.Element;
   title?: string;
@@ -19,12 +22,7 @@ const Modal = ({
     <div className="w-screen h-screen fixed flex justify-center items-center">
       <div className="w-96 h-96 rounded-xl bg-white shadow flex flex-col p-6">
         <div className="flex justify-end">
-          <button
-            className="bg-transparent border-none cursor-pointer text-xl text-gray-800"
-            onClick={() => onClose?.()}
-          >
-            X
-          </button>
+          <Button type="icon" icon={faXmark} onClick={() => onClose?.()} />
         </div>
         {title ? (
           <h1 className="text-3xl leading-normal font-extrabold text-gray-700 inline-block text-center mt-2.5">
@@ -39,15 +37,8 @@ const Modal = ({
         </div>
         {withFooter ? (
           <div className="flex flex-1 justify-center items-center">
-            <button
-              className="bg-red-300 text-lg font-bold text-white py-1.5 px-2.5 rounded"
-              onClick={() => onCancel?.()}
-            >
-              Cancel
-            </button>
-            <button className="bg-purple-300 text-lg font-bold text-white py-1.5 px-2.5 rounded">
-              Continue
-            </button>
+            <Button type="danger" label="Cancel" onClick={() => onCancel?.()} />
+            <Button type="primary" label="Continue" />
           </div>
         ) : undefined}
       </div>

@@ -1,11 +1,13 @@
+import Button from "@components/Button";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 type SettingsProps = {
   onSubmit: (values: any) => void;
+  loading?: boolean;
 };
 
-const SettingsForm = ({ onSubmit }: SettingsProps) => {
+const SettingsForm = ({ onSubmit, loading }: SettingsProps) => {
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -45,12 +47,7 @@ const SettingsForm = ({ onSubmit }: SettingsProps) => {
       </select>
 
       <div className="text-center">
-        <button
-          className="bg-purple-300 text-lg font-bold text-white py-1.5 px-2.5 rounded"
-          type="submit"
-        >
-          Submit
-        </button>
+        <Button label="Submit" type="primary" loading={loading} />
       </div>
     </form>
   );

@@ -54,7 +54,7 @@ const Home: NextPage = () => {
           onClose={() => setModalOpen(false)}
         >
           <>
-            <SettingsForm onSubmit={onSubmit} />
+            <SettingsForm onSubmit={onSubmit} loading={mutation.isLoading} />
             {mutation.error ? (
               <div className="text-red-500">{mutation.error.message}</div>
             ) : undefined}
