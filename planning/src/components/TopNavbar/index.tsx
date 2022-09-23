@@ -1,4 +1,5 @@
-import Image from "next/image";
+import Button from "@components/Button";
+import { faBook, faCode } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 const TopNavbar = () => {
@@ -16,10 +17,10 @@ const TopNavbar = () => {
       </Link>
       <div className="ml-auto mr-2 text-gray-700">
         <a href="https://github.com/demo-hub/AgilePlanning">
-          <button className="p-1 mr-2">
-            <Image alt="" src="/github_icon.png" width="16" height="16" /> Check
-            the code
-          </button>
+          <Button type="no-fill" label="Check the code" icon={faCode} />
+        </a>
+        <a href="https://liberapay.com/sombra/donate">
+          <Button type="no-fill" label="Buy me a book" icon={faBook} />
         </a>
         <span className="text-gray-700">
           Created with{" "}
