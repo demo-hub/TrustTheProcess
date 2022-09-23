@@ -22,15 +22,6 @@ const TopNavbar = () => {
         <a href="https://liberapay.com/sombra/donate">
           <Button type="no-fill" label="Buy me a book" icon={faBook} />
         </a>
-        <span className="text-gray-700">
-          Created with{" "}
-          <a
-            className="text-purple-300 underline font-bold"
-            href="https://github.com/t3-oss/create-t3-app"
-          >
-            T3
-          </a>
-        </span>
       </div>
     </div>
   );
