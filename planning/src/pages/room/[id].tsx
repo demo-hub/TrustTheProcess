@@ -11,26 +11,36 @@ const FIBONACCI_SEQUENCE = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
 const Room: NextPage = () => {
   const router = useRouter();
   const roomId = router.query.id as string;
-  const room = trpc.useQuery(["room.getById", { id: roomId }]);
-  const allRoomSessions = trpc.useQuery([
-    "session.getRoomSessions",
-    { roomId },
-  ]);
+  const room = trpc.useQuery(["room.getById", { id: roomId }], {
+    enabled: !!roomId,
+  });
+  const allRoomSessions = trpc.useQuery(
+    ["session.getRoomSessions", { roomId }],
+    { enabled: !!roomId }
+  );
   const startSessionMutation = trpc.useMutation(["user.startSession"]);
 
   const userSession = useMemo(() => {
-    if (startSessionMutation.data && !startSessionMutation.error) {
+    if (
+      startSessionMutation.data &&
+      !startSessionMutation.error &&
+      !startSessionMutation.isLoading
+    ) {
       sessionStorage.setItem("user", startSessionMutation.data.userId ?? "");
       return startSessionMutation.data;
     }
 
     return undefined;
-  }, [startSessionMutation.data, startSessionMutation.error]);
+  }, [
+    startSessionMutation.data,
+    startSessionMutation.error,
+    startSessionMutation.isLoading,
+  ]);
 
   useEffect(() => {
     const userId = sessionStorage.getItem("user");
 
-    if (!userSession && !startSessionMutation.isLoading)
+    if (!userSession && !startSessionMutation.isLoading && roomId)
       startSessionMutation.mutate({ id: userId, roomId });
   }, [roomId, startSessionMutation, userSession]);
 
