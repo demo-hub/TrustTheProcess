@@ -5,6 +5,6 @@ export const sessionRouter = createRouter()
 .query("getRoomSessions", {
     input: z.object({ roomId: z.string() }),
     async resolve({ input, ctx: { prisma } }) {
-      return prisma.session.findMany({ where: { roomId: input.roomId } });
+      return prisma.session.findMany({ where: { roomId: input.roomId }, include: { user: true } });
     }
   });

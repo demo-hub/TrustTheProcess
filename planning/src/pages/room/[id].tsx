@@ -32,7 +32,14 @@ const Room: NextPage = () => {
 
     if (!userSession && !startSessionMutation.isLoading)
       startSessionMutation.mutate({ id: userId, roomId });
-  });
+  }, [roomId, startSessionMutation, userSession]);
+
+  const allSessions = useMemo(() => {
+    return [
+      userSession,
+      ...(allRoomSessions.data?.filter((s) => s.id !== userSession?.id) ?? []),
+    ];
+  }, [allRoomSessions.data, userSession]);
 
   const [selected, setSelected] = useState(0);
 
@@ -50,12 +57,14 @@ const Room: NextPage = () => {
         ))}
       </div>
       <div className="flex gap-4">
-        {allRoomSessions.data?.map((session) => (
+        {allSessions.map((session) => (
           <UserCard
-            key={session.id}
-            name={session.userId}
-            voting={session.id !== userSession?.id}
-            disableLoading={session.id === userSession?.id}
+            key={session?.id}
+            name={session?.user.name ?? ""}
+            voting={session?.id !== userSession?.id}
+            vote={selected}
+            disableLoading={session?.id === userSession?.id}
+            moderator={session?.id === userSession?.id}
           />
         ))}
       </div>

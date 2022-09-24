@@ -21,7 +21,7 @@ export const userRouter = createRouter()
         input.id = guest.id;
       }
 
-      const session = await prisma.session.findFirst({ where: { userId: input.id, roomId: input.roomId }});
+      const session = await prisma.session.findFirst({ where: { userId: input.id, roomId: input.roomId }, include: { user: true }});
 
       if (session) return session;
 
@@ -33,6 +33,6 @@ export const userRouter = createRouter()
       // Zero the time component
       expiryDate.setHours(0, 0, 0, 0);
       
-      return prisma.session.create({ data: { userId: input.id, roomId: input.roomId, sessionToken: randomUUID(), expires: expiryDate } });
+      return prisma.session.create({ data: { userId: input.id, roomId: input.roomId, sessionToken: randomUUID(), expires: expiryDate }, include: { user: true } });
     },
   });
