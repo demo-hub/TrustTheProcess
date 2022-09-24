@@ -1,10 +1,14 @@
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 type PokerCardProps = {
   value: number;
   selected: boolean;
   onClick?: () => void;
+  loading?: boolean;
 };
 
-const PokerCard = ({ value, selected, onClick }: PokerCardProps) => {
+const PokerCard = ({ value, selected, onClick, loading }: PokerCardProps) => {
   return (
     <div
       className={`p-12 border border-gray-500 rounded cursor-pointer shadow-xl motion-safe:hover:scale-105 text-center ${
@@ -15,7 +19,11 @@ const PokerCard = ({ value, selected, onClick }: PokerCardProps) => {
       <span
         className={`text-purple-${selected ? "500" : "300"} font-bold text-6xl`}
       >
-        {value}
+        {loading ? (
+          <FontAwesomeIcon icon={faSpinner} spin width={64} height={64} />
+        ) : (
+          value
+        )}
       </span>
     </div>
   );

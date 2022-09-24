@@ -1,5 +1,6 @@
 import PageTitle from "@components/PageTitle";
 import PokerCard from "@components/PokerCard";
+import UserCard from "@components/UserCard";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
@@ -38,7 +39,7 @@ const Room: NextPage = () => {
   return (
     <>
       <PageTitle title="Room" highlighted={room.data?.name} />
-      <div className="grid grid-cols-4 gap-8 justify-center">
+      <div className="grid grid-cols-4 gap-8 justify-center pb-8">
         {FIBONACCI_SEQUENCE.map((value) => (
           <PokerCard
             key={value}
@@ -48,10 +49,9 @@ const Room: NextPage = () => {
           />
         ))}
       </div>
-      <p>Logged in: {userSession?.userId}</p>
-      <div>
+      <div className="flex gap-4">
         {allRoomSessions.data?.map((session) => (
-          <p key={session.id}>Session: {session.userId}</p>
+          <UserCard key={session.id} name={session.userId} voting />
         ))}
       </div>
     </>
