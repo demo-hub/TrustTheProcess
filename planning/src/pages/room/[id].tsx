@@ -47,7 +47,9 @@ const Room: NextPage = () => {
   const allSessions = useMemo(() => {
     return [
       userSession,
-      ...(allRoomSessions.data?.filter((s) => s.id !== userSession?.id) ?? []),
+      ...(allRoomSessions.data?.filter(
+        (s) => s.id !== userSession?.id && s.userId !== userSession?.userId
+      ) ?? []),
     ];
   }, [allRoomSessions.data, userSession]);
 
