@@ -51,7 +51,12 @@ const Room: NextPage = () => {
       </div>
       <div className="flex gap-4">
         {allRoomSessions.data?.map((session) => (
-          <UserCard key={session.id} name={session.userId} voting />
+          <UserCard
+            key={session.id}
+            name={session.userId}
+            voting={session.id !== userSession?.id}
+            disableLoading={session.id === userSession?.id}
+          />
         ))}
       </div>
     </>
