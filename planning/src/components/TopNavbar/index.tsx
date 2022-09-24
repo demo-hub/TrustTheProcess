@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const TopNavbar = () => {
   return (
-    <div className="flex border-b-2 border-grey-500 items-center fixed w-full">
+    <div className="flex border-b-2 border-grey-500 items-center fixed w-full bg-white">
       <Link href="/">
         <a>
           <span className="font-bold p-2 text-gray-700">
