@@ -71,6 +71,8 @@ const Button = ({
           icon={faSpinner}
           spin
           style={{ paddingRight: "0.3rem" }}
+          height={16}
+          width={16}
         />
       ) : undefined}
       {type !== "icon" ? label : undefined}
