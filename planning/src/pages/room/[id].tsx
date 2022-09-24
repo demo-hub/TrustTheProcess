@@ -11,9 +11,13 @@ const Room: NextPage = () => {
   const router = useRouter();
   const roomId = router.query.id as string;
   const room = trpc.useQuery(["room.getById", { id: roomId }]);
+  const allRoomSessions = trpc.useQuery([
+    "session.getRoomSessions",
+    { roomId },
+  ]);
   const startSessionMutation = trpc.useMutation(["user.startSession"]);
 
-  const session = useMemo(() => {
+  const userSession = useMemo(() => {
     if (startSessionMutation.data && !startSessionMutation.error) {
       sessionStorage.setItem("user", startSessionMutation.data.userId ?? "");
       return startSessionMutation.data;
@@ -25,7 +29,7 @@ const Room: NextPage = () => {
   useEffect(() => {
     const userId = sessionStorage.getItem("user");
 
-    if (!session && !startSessionMutation.isLoading)
+    if (!userSession && !startSessionMutation.isLoading)
       startSessionMutation.mutate({ id: userId, roomId });
   });
 
@@ -44,7 +48,12 @@ const Room: NextPage = () => {
           />
         ))}
       </div>
-      <p>Logged in: {session?.userId}</p>
+      <p>Logged in: {userSession?.userId}</p>
+      <div>
+        {allRoomSessions.data?.map((session) => (
+          <p key={session.id}>Session: {session.userId}</p>
+        ))}
+      </div>
     </>
   );
 };
