@@ -1,11 +1,24 @@
 import { randomUUID } from "crypto";
+import { adjectives, animals, Config, uniqueNamesGenerator } from "unique-names-generator";
 import { z } from "zod";
 import { createRouter } from "./context";
+
+const generateRandomName = () => {
+  const nameConfig: Config = {
+    dictionaries: [adjectives, animals],
+    separator: ' ',
+    length: 2,
+  }
+
+  return uniqueNamesGenerator(nameConfig);
+}
 
 export const userRouter = createRouter()
   .mutation("create", {
     async resolve({ ctx: { prisma } }) {
-        return prisma.user.create({ data: { name: 'Guest' }});
+      const randomName: string = generateRandomName();
+
+      return prisma.user.create({ data: { name: randomName }});
     },
   })
   .mutation("startSession", {
@@ -16,7 +29,9 @@ export const userRouter = createRouter()
       }),
     async resolve({ input, ctx: { prisma } }) {
       if (!input.id) {
-        const guest = await prisma.user.create({ data: { name: 'Guest' }});
+        const randomName: string = generateRandomName();
+
+        const guest = await prisma.user.create({ data: { name: randomName }});
 
         input.id = guest.id;
       }
