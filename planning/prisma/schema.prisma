@@ -2,12 +2,14 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider             = "mysql"
+    url                  = env("DATABASE_URL")
+    referentialIntegrity = "prisma"
 }
 
 model Example {
@@ -23,7 +25,7 @@ model Account {
     providerAccountId String
     refresh_token     String? @db.Text
     access_token      String? @db.Text
-    expires_at        Int?    @db.Integer
+    expires_at        Int?    @db.Int
     token_type        String?
     scope             String?
     id_token          String? @db.Text
