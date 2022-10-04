@@ -64,11 +64,23 @@ const Room: NextPage = () => {
     ];
   }, [allRoomSessions.data, userSession]);
 
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState<number | string | null>(null);
 
   return (
     <>
       <PageTitle title="Room" highlighted={room.data?.name} />
+      <div className="flex gap-4">
+        {allSessions.map((session) => (
+          <UserCard
+            key={session?.id}
+            name={session?.user.name ?? ""}
+            voting={session?.id !== userSession?.id}
+            vote={selected ?? "-"}
+            disableLoading={session?.id === userSession?.id}
+            moderator={session?.userId === room?.data?.ownerId}
+          />
+        ))}
+      </div>
       <div className="grid grid-cols-4 gap-8 justify-center pb-8">
         {(room.data?.sequence === "1" ? FIBONACCI_SEQUENCE : SEQUENTIAL).map(
           (value) => (
@@ -80,18 +92,6 @@ const Room: NextPage = () => {
             />
           )
         )}
-      </div>
-      <div className="flex gap-4">
-        {allSessions.map((session) => (
-          <UserCard
-            key={session?.id}
-            name={session?.user.name ?? ""}
-            voting={session?.id !== userSession?.id}
-            vote={selected}
-            disableLoading={session?.id === userSession?.id}
-            moderator={session?.userId === room?.data?.ownerId}
-          />
-        ))}
       </div>
     </>
   );

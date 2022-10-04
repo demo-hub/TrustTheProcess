@@ -4,7 +4,7 @@ import Image from "next/image";
 type CardProps = {
   name: string;
   voting?: boolean;
-  vote?: number;
+  vote?: number | string;
   disableLoading?: boolean;
   moderator?: boolean;
 };
@@ -26,7 +26,7 @@ const UserCard = ({
       <PokerCard
         loading={voting}
         ready={disableLoading ? false : !voting}
-        value={vote ?? 0}
+        value={vote ?? ""}
         selected={false}
         selectable={false}
       />

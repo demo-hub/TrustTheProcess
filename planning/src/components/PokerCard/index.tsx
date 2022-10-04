@@ -2,7 +2,7 @@ import { faCheck, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type PokerCardProps = {
-  value: number;
+  value: number | string;
   selected: boolean;
   selectable?: boolean;
   onClick?: () => void;
