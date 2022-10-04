@@ -81,7 +81,7 @@ const Room: NextPage = () => {
           />
         ))}
       </div>
-      <div className="grid grid-cols-4 gap-8 justify-center pb-8">
+      <div className="grid grid-cols-4 gap-8 justify-center pt-8">
         {(room.data?.sequence === "1" ? FIBONACCI_SEQUENCE : SEQUENTIAL).map(
           (value) => (
             <PokerCard
