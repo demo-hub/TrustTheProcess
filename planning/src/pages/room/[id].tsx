@@ -38,11 +38,21 @@ const Room: NextPage = () => {
   ]);
 
   useEffect(() => {
+    if (!room.data?.name && !room.isLoading) {
+      router.push("/");
+    }
     const userId = sessionStorage.getItem("user");
 
     if (!userSession && !startSessionMutation.isLoading && roomId)
       startSessionMutation.mutate({ id: userId, roomId });
-  }, [roomId, startSessionMutation, userSession]);
+  }, [
+    room.data?.name,
+    room.isLoading,
+    roomId,
+    router,
+    startSessionMutation,
+    userSession,
+  ]);
 
   const allSessions = useMemo(() => {
     return [
@@ -76,7 +86,7 @@ const Room: NextPage = () => {
             voting={session?.id !== userSession?.id}
             vote={selected}
             disableLoading={session?.id === userSession?.id}
-            moderator={session?.id === userSession?.id}
+            moderator={session?.userId === room?.data?.ownerId}
           />
         ))}
       </div>
