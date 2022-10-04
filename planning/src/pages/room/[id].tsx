@@ -4,6 +4,7 @@ import UserCard from "@components/UserCard";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
+import { removeDuplicates } from "src/utils/removeDuplicatesFromArray";
 import { trpc } from "../../utils/trpc";
 
 const FIBONACCI_SEQUENCE = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
@@ -58,9 +59,12 @@ const Room: NextPage = () => {
   const allSessions = useMemo(() => {
     return [
       userSession,
-      ...(allRoomSessions.data?.filter(
-        (s) => s.id !== userSession?.id && s.userId !== userSession?.userId
-      ) ?? []),
+      ...removeDuplicates(
+        allRoomSessions.data?.filter(
+          (s) => s.id !== userSession?.id && s.userId !== userSession?.userId
+        ) ?? [],
+        "userId"
+      ),
     ];
   }, [allRoomSessions.data, userSession]);
 
