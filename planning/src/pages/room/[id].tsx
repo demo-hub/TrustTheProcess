@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { trpc } from "../../utils/trpc";
 
 const FIBONACCI_SEQUENCE = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
+const SEQUENTIAL = new Array(15).fill(null).map((_, i) => i + 1);
 
 const Room: NextPage = () => {
   const router = useRouter();
@@ -38,7 +39,7 @@ const Room: NextPage = () => {
   ]);
 
   useEffect(() => {
-    if (!room.data?.name && !room.isLoading) {
+    if (roomId && !room.data?.name && !room.isLoading) {
       router.push("/");
     }
     const userId = sessionStorage.getItem("user");
@@ -69,14 +70,16 @@ const Room: NextPage = () => {
     <>
       <PageTitle title="Room" highlighted={room.data?.name} />
       <div className="grid grid-cols-4 gap-8 justify-center pb-8">
-        {FIBONACCI_SEQUENCE.map((value) => (
-          <PokerCard
-            key={value}
-            value={value}
-            selected={selected === value}
-            onClick={() => setSelected(value)}
-          />
-        ))}
+        {(room.data?.sequence === "1" ? FIBONACCI_SEQUENCE : SEQUENTIAL).map(
+          (value) => (
+            <PokerCard
+              key={value}
+              value={value}
+              selected={selected === value}
+              onClick={() => setSelected(value)}
+            />
+          )
+        )}
       </div>
       <div className="flex gap-4">
         {allSessions.map((session) => (
