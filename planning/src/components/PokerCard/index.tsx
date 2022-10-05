@@ -8,6 +8,7 @@ type PokerCardProps = {
   onClick?: () => void;
   loading?: boolean;
   ready?: boolean;
+  opaque?: boolean;
 };
 
 const PokerCard = ({
@@ -17,12 +18,15 @@ const PokerCard = ({
   loading,
   ready,
   selectable = true,
+  opaque = false,
 }: PokerCardProps) => {
   return (
     <div
       className={`p-12 border border-gray-500 rounded ${
         selectable ? "cursor-pointer motion-safe:hover:scale-105" : ""
-      } shadow-xl text-center ${selected ? "bg-purple-100 scale-105" : ""}`}
+      } shadow-xl text-center ${selected ? "bg-purple-100 scale-105" : ""} ${
+        opaque ? "opacity-50" : ""
+      }`}
       onClick={() => onClick?.()}
     >
       <span

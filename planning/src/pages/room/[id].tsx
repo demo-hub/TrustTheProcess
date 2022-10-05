@@ -68,6 +68,7 @@ const Room: NextPage = () => {
   ];
 
   const [selected, setSelected] = useState<number | string | null>(null);
+  const [confirmed, setConfirmed] = useState(false);
 
   return (
     <>
@@ -84,9 +85,13 @@ const Room: NextPage = () => {
           />
         ))}
       </div>
-      {selected ? (
+      {selected && !confirmed ? (
         <div className="pt-8">
-          <Button type="primary" label="Confirm" />
+          <Button
+            type="primary"
+            label="Confirm"
+            onClick={() => setConfirmed(true)}
+          />
         </div>
       ) : undefined}
       <div className="grid grid-cols-4 gap-8 justify-center pt-8">
@@ -97,13 +102,19 @@ const Room: NextPage = () => {
               value={value}
               selected={selected === value}
               onClick={() => setSelected(value)}
+              selectable={!confirmed}
+              opaque={confirmed && value !== selected}
             />
           )
         )}
       </div>
-      {selected ? (
+      {selected && !confirmed ? (
         <div className="pt-8">
-          <Button type="primary" label="Confirm" />
+          <Button
+            type="primary"
+            label="Confirm"
+            onClick={() => setConfirmed(true)}
+          />
         </div>
       ) : undefined}
     </>
