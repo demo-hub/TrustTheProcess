@@ -1,11 +1,12 @@
+import Button from "@components/Button";
 import PageTitle from "@components/PageTitle";
 import PokerCard from "@components/PokerCard";
 import UserCard from "@components/UserCard";
+import removeDuplicates from "@utils/removeDuplicatesFromArray";
+import { trpc } from "@utils/trpc";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import { removeDuplicates } from "src/utils/removeDuplicatesFromArray";
-import { trpc } from "../../utils/trpc";
 
 const FIBONACCI_SEQUENCE = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
 const SEQUENTIAL = new Array(15).fill(null).map((_, i) => i + 1);
@@ -56,17 +57,15 @@ const Room: NextPage = () => {
     userSession,
   ]);
 
-  const allSessions = useMemo(() => {
-    return [
-      userSession,
-      ...removeDuplicates(
-        allRoomSessions.data?.filter(
-          (s) => s.id !== userSession?.id && s.userId !== userSession?.userId
-        ) ?? [],
-        "userId"
-      ),
-    ];
-  }, [allRoomSessions.data, userSession]);
+  const allSessions = [
+    userSession,
+    ...removeDuplicates(
+      allRoomSessions.data?.filter(
+        (s) => s.id !== userSession?.id && s.userId !== userSession?.userId
+      ) ?? [],
+      "userId"
+    ),
+  ];
 
   const [selected, setSelected] = useState<number | string | null>(null);
 
@@ -85,6 +84,11 @@ const Room: NextPage = () => {
           />
         ))}
       </div>
+      {selected ? (
+        <div className="pt-8">
+          <Button type="primary" label="Confirm" />
+        </div>
+      ) : undefined}
       <div className="grid grid-cols-4 gap-8 justify-center pt-8">
         {(room.data?.sequence === "1" ? FIBONACCI_SEQUENCE : SEQUENTIAL).map(
           (value) => (
@@ -97,6 +101,11 @@ const Room: NextPage = () => {
           )
         )}
       </div>
+      {selected ? (
+        <div className="pt-8">
+          <Button type="primary" label="Confirm" />
+        </div>
+      ) : undefined}
     </>
   );
 };
