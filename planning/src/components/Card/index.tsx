@@ -1,3 +1,12 @@
+import {
+  availableCard,
+  cardDescription,
+  cardName,
+  comingSoon,
+  container,
+  unavailableCard,
+} from "./styles.css";
+
 type CardProps = {
   name: string;
   description: string;
@@ -7,19 +16,15 @@ type CardProps = {
 const Card = ({ name, description, unavailable = false }: CardProps) => {
   return (
     <div
-      className={`flex flex-col justify-center p-6 duration-500 border-2 border-gray-500 rounded ${
-        !unavailable
-          ? "cursor-pointer shadow-xl motion-safe:hover:scale-105"
-          : "bg-purple-100"
+      className={`${container} ${
+        !unavailable ? unavailableCard : availableCard
       }`}
     >
-      <h2 className="text-lg text-gray-700">
+      <h2 className={cardName}>
         {name}{" "}
-        {unavailable ? (
-          <span className="italic text-purple-500">Coming Soon</span>
-        ) : null}
+        {unavailable ? <span className={comingSoon}>Coming Soon</span> : null}
       </h2>
-      <p className="text-sm text-gray-600">{description}</p>
+      <p className={cardDescription}>{description}</p>
     </div>
   );
 };
