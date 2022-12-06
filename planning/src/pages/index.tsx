@@ -6,6 +6,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { trpc } from "src/utils/trpc";
+import { error, grid } from "./index.styles.css";
 
 const Home: NextPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -29,7 +30,7 @@ const Home: NextPage = () => {
   return (
     <>
       <PageTitle title="Pick your" highlighted="Method" />
-      <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-2">
+      <div className={grid}>
         <div onClick={() => setModalOpen(true)}>
           <Card
             name="Planning Poker"
@@ -56,7 +57,7 @@ const Home: NextPage = () => {
           <>
             <SettingsForm onSubmit={onSubmit} loading={mutation.isLoading} />
             {mutation.error ? (
-              <div className="text-red-500">{mutation.error.message}</div>
+              <div className={error}>{mutation.error.message}</div>
             ) : undefined}
           </>
         </Modal>
