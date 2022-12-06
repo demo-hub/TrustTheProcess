@@ -1,5 +1,13 @@
 import Button from "@components/Button";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  body,
+  button,
+  container,
+  footer,
+  highlighted,
+  modal,
+} from "./styles.css";
 
 type ModalProps = {
   children: JSX.Element;
@@ -19,24 +27,22 @@ const Modal = ({
   onClose,
 }: ModalProps) => {
   return (
-    <div className="w-screen h-screen fixed flex justify-center items-center">
-      <div className="w-96 h-96 rounded-xl bg-white shadow flex flex-col p-6">
-        <div className="flex justify-end">
+    <div className={container}>
+      <div className={modal}>
+        <div className={button}>
           <Button type="icon" icon={faXmark} onClick={() => onClose?.()} />
         </div>
         {title ? (
-          <h1 className="text-3xl leading-normal font-extrabold text-gray-700 inline-block text-center mt-2.5">
+          <h1 className={title}>
             {title}{" "}
             {highlightedWord ? (
-              <span className="text-purple-300">{highlightedWord}</span>
+              <span className={highlighted}>{highlightedWord}</span>
             ) : undefined}
           </h1>
         ) : undefined}
-        <div className="flex flex-1 justify-center items-center text-2xl text-center">
-          {children}
-        </div>
+        <div className={body}>{children}</div>
         {withFooter ? (
-          <div className="flex flex-1 justify-center items-center">
+          <div className={footer}>
             <Button type="danger" label="Cancel" onClick={() => onCancel?.()} />
             <Button type="primary" label="Continue" />
           </div>
