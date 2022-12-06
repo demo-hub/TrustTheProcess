@@ -40,14 +40,6 @@ export const button = recipe({
         paddingRight: "0.625rem",
       },
     },
-    size: {
-      small: { padding: 12 },
-      medium: { padding: 16 },
-      large: { padding: 24 },
-    },
-    rounded: {
-      true: { borderRadius: 999 },
-    },
   },
 
   defaultVariants: {

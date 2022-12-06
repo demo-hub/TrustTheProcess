@@ -16,7 +16,6 @@ If you are not familiar with the different technologies used in this project, pl
 
 - [Next-Auth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
-- [TailwindCSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io) (using @next version? [see v10 docs here](https://alpha.trpc.io))
 
 ## How do I deploy this?

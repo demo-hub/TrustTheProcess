@@ -6,7 +6,7 @@ export const container = style({
   backgroundColor: "#ffffff",
   alignItems: "center",
   width: "100%",
-  borderBottomWidth: "2px",
+  borderBottom: "2px",
 });
 
 export const process = style({
