@@ -1,5 +1,6 @@
 import { faSpinner, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { button } from "./styles.css";
 
 type ButtonProps = {
   type: "primary" | "danger" | "icon" | "no-fill";
@@ -18,43 +19,9 @@ const Button = ({
   loading,
   disabled,
 }: ButtonProps) => {
-  let backgroundColor = "";
-  let textColor = "";
-  let textSize = "";
-  let padding = "";
-
-  switch (type) {
-    case "primary":
-      backgroundColor = "bg-purple-300";
-      textColor = "text-white";
-      textSize = "text-lg";
-      padding = "py-1.5 px-2.5";
-      break;
-    case "danger":
-      backgroundColor = "bg-red-300";
-      textColor = "text-white";
-      textSize = "text-lg";
-      padding = "py-1.5 px-2.5";
-      break;
-    case "icon":
-      backgroundColor = "bg-transparent";
-      textColor = "text-gray-800";
-      textSize = "text-xl";
-      padding = "py-1.5 px-2.5";
-      break;
-    case "no-fill":
-      backgroundColor = "bg-transparent";
-      textColor = "text-purple-300";
-      textSize = "text-lg";
-      padding = "px-2.5";
-      break;
-    default:
-      break;
-  }
-
   return (
     <button
-      className={`${backgroundColor} ${textSize} font-bold ${textColor} ${padding} rounded inline-flex items-center`}
+      className={button({ type })}
       onClick={() => onClick?.()}
       disabled={loading || disabled}
     >

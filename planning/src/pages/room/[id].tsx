@@ -7,6 +7,7 @@ import { trpc } from "@utils/trpc";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
+import { cardsGrid, confirmButton, sessions } from "../../styles/room.css";
 
 const FIBONACCI_SEQUENCE = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
 const SEQUENTIAL = new Array(15).fill(null).map((_, i) => i + 1);
@@ -73,7 +74,7 @@ const Room: NextPage = () => {
   return (
     <>
       <PageTitle title="Room" highlighted={room.data?.name} />
-      <div className="flex gap-4">
+      <div className={sessions}>
         {allSessions.map((session) => (
           <UserCard
             key={session?.id}
@@ -86,7 +87,7 @@ const Room: NextPage = () => {
         ))}
       </div>
       {selected && !confirmed ? (
-        <div className="pt-8">
+        <div className={confirmButton}>
           <Button
             type="primary"
             label="Confirm"
@@ -94,7 +95,7 @@ const Room: NextPage = () => {
           />
         </div>
       ) : undefined}
-      <div className="grid grid-cols-4 gap-8 justify-center pt-8">
+      <div className={cardsGrid}>
         {(room.data?.sequence === "1" ? FIBONACCI_SEQUENCE : SEQUENTIAL).map(
           (value) => (
             <PokerCard
@@ -109,7 +110,7 @@ const Room: NextPage = () => {
         )}
       </div>
       {selected && !confirmed ? (
-        <div className="pt-8">
+        <div className={confirmButton}>
           <Button
             type="primary"
             label="Confirm"

@@ -23,6 +23,7 @@
     "@trpc/react": "^9.26.2",
     "@trpc/server": "^9.26.2",
     "@vanilla-extract/next-plugin": "^2.1.1",
+    "@vanilla-extract/recipes": "^0.3.0",
     "formik": "^2.2.9",
     "next": "^13.0.5",
     "next-auth": "^4.10.3",

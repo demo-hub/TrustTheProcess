@@ -5,8 +5,8 @@ import SettingsForm from "@components/SettingsForm";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { trpc } from "src/utils/trpc";
-import { error, grid } from "../styles/index.styles.css";
+import { error, grid } from "../styles/index.css";
+import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
