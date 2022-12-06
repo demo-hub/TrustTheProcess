@@ -1,5 +1,6 @@
 import TopNavbar from "@components/TopNavbar";
 import Head from "next/head";
+import { main } from "./styles.css";
 
 const Layout = ({ children }: { children: JSX.Element }) => {
   return (
@@ -16,9 +17,7 @@ const Layout = ({ children }: { children: JSX.Element }) => {
       </Head>
 
       <TopNavbar />
-      <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-        {children}
-      </main>
+      <main className={main}>{children}</main>
     </>
   );
 };
