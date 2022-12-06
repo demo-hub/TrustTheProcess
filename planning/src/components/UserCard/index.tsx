@@ -1,5 +1,6 @@
 import PokerCard from "@components/PokerCard";
 import Image from "next/image";
+import { container, role } from "./styles.css";
 
 type CardProps = {
   name: string;
@@ -17,12 +18,10 @@ const UserCard = ({
   moderator,
 }: CardProps) => {
   return (
-    <div className="flex flex-col gap-2 justify-center p-4 duration-500 border-2 border-gray-500 rounded text-center">
-      <h2 className="text-2xl text-purple-300 font-bold">{name}</h2>
+    <div className={container}>
+      <h2 className={name}>{name}</h2>
       <Image alt="" src="/user_image.png" width="180" height="160" />
-      <h2 className="text-lg text-gray-700">
-        {moderator ? "Moderator" : "Member"}
-      </h2>
+      <h2 className={role}>{moderator ? "Moderator" : "Member"}</h2>
       <PokerCard
         loading={voting}
         ready={disableLoading ? false : !voting}
