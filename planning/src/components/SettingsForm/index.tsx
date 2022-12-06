@@ -1,6 +1,7 @@
 import Button from "@components/Button";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { button, form } from "./styles.css";
 
 type SettingsProps = {
   onSubmit: (values: any) => void;
@@ -23,7 +24,7 @@ const SettingsForm = ({ onSubmit, loading }: SettingsProps) => {
   });
 
   return (
-    <form className="space-y-4" onSubmit={formik.handleSubmit}>
+    <form className={form} onSubmit={formik.handleSubmit}>
       <input
         id="name"
         name="name"
@@ -46,7 +47,7 @@ const SettingsForm = ({ onSubmit, loading }: SettingsProps) => {
         <option value="2">Sequential</option>
       </select>
 
-      <div className="text-center">
+      <div className={button}>
         <Button label="Submit" type="primary" loading={loading} />
       </div>
     </form>
