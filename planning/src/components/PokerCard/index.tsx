@@ -1,5 +1,6 @@
 import { faCheck, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as styles from "./styles.css";
 
 type PokerCardProps = {
   value: number | string;
@@ -22,15 +23,15 @@ const PokerCard = ({
 }: PokerCardProps) => {
   return (
     <div
-      className={`p-12 border border-gray-500 rounded ${
-        selectable ? "cursor-pointer motion-safe:hover:scale-105" : ""
-      } shadow-xl text-center ${selected ? "bg-purple-100 scale-105" : ""} ${
-        opaque ? "opacity-50" : ""
-      }`}
+      className={`${styles.container} ${selectable ? styles.selectable : ""} ${
+        selected ? styles.selected : ""
+      } ${opaque ? styles.opaque : ""}`}
       onClick={() => onClick?.()}
     >
       <span
-        className={`text-purple-${selected ? "500" : "300"} font-bold text-6xl`}
+        className={`${selected ? styles.selectedText : styles.text} ${
+          styles.textSize
+        }`}
       >
         {loading || ready ? (
           <div className="text-sm">

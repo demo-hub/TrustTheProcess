@@ -6,7 +6,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { trpc } from "src/utils/trpc";
-import { error, grid } from "./index.styles.css";
+import { error, grid } from "../styles/index.styles.css";
 
 const Home: NextPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
