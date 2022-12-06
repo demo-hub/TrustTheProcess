@@ -6,14 +6,10 @@ const TopNavbar = () => {
   return (
     <div className="flex border-b-2 border-grey-500 items-center fixed w-full bg-white">
       <Link href="/">
-        <a>
-          <span className="font-bold p-2 text-gray-700">
-            Trust the{" "}
-            <span className="text-purple-300 italic tracking-wider">
-              Process
-            </span>
-          </span>
-        </a>
+        <span className="font-bold p-2 text-gray-700">
+          Trust the{" "}
+          <span className="text-purple-300 italic tracking-wider">Process</span>
+        </span>
       </Link>
       <div className="ml-auto mr-2 text-gray-700">
         <a href="https://github.com/demo-hub/AgilePlanning">

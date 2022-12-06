@@ -1,4 +1,6 @@
-import { env } from "./src/env/server.mjs";
+import {
+  createVanillaExtractPlugin
+} from '@vanilla-extract/next-plugin';
 
 /**
  * Don't be scared of the generics here.
@@ -9,7 +11,8 @@ import { env } from "./src/env/server.mjs";
  * @constraint {{import('next').NextConfig}}
  */
 function defineNextConfig(config) {
-  return config;
+  const withVanillaExtract = createVanillaExtractPlugin();
+  return withVanillaExtract(config);
 }
 
 export default defineNextConfig({
