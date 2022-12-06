@@ -1,13 +1,7 @@
 import Button from "@components/Button";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import {
-  body,
-  button,
-  container,
-  footer,
-  highlighted,
-  modal,
-} from "./styles.css";
+import { highlighted } from "../../styles/globals.css";
+import { body, button, container, footer, modal } from "./styles.css";
 
 type ModalProps = {
   children: JSX.Element;

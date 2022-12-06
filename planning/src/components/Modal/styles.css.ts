@@ -35,10 +35,6 @@ export const title = style({
   textAlign: "center",
 });
 
-export const highlighted = style({
-  color: "#C4B5FD",
-});
-
 export const body = style({
   display: "flex",
   fontSize: "1.5rem",

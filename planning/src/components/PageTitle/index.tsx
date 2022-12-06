@@ -1,3 +1,6 @@
+import * as globalStyles from "../../styles/globals.css";
+import { container } from "./styles.css";
+
 const PageTitle = ({
   title,
   highlighted,
@@ -6,8 +9,8 @@ const PageTitle = ({
   highlighted?: string;
 }) => {
   return (
-    <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
-      {title} <span className="text-purple-300">{highlighted}</span>
+    <h1 className={container}>
+      {title} <span className={globalStyles.highlighted}>{highlighted}</span>
     </h1>
   );
 };
