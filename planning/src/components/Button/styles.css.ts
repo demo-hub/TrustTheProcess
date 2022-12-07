@@ -1,4 +1,5 @@
 import { recipe } from "@vanilla-extract/recipes";
+import { vars } from "../../styles/globals.css";
 
 export const button = recipe({
   base: {
@@ -25,7 +26,7 @@ export const button = recipe({
         padding: "0.375rem 0.625rem",
       },
       primary: {
-        backgroundColor: "#C4B5FD",
+        backgroundColor: vars.color.primary,
         color: "white",
         fontSize: "1.125rem",
         lineHeight: "1.75rem",
@@ -33,7 +34,7 @@ export const button = recipe({
       },
       "no-fill": {
         backgroundColor: "transparent",
-        color: "#C4B5FD",
+        color: vars.color.primary,
         fontSize: "1.125rem",
         lineHeight: "1.75rem",
         paddingLeft: "0.625rem",

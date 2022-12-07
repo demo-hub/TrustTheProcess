@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { vars } from "../../styles/globals.css";
 
 export const container = style({
   padding: "3rem",
@@ -27,7 +28,7 @@ export const selectedText = style({
 });
 
 export const text = style({
-  color: "#C4B5FD",
+  color: vars.color.primary,
 });
 
 export const textSize = style({

@@ -1,4 +1,4 @@
-import { globalStyle, style } from "@vanilla-extract/css";
+import { createTheme, globalStyle, style } from "@vanilla-extract/css";
 
 globalStyle("html, body", {
   padding: 0,
@@ -16,6 +16,12 @@ globalStyle("*", {
   boxSizing: "border-box",
 });
 
+export const [themeClass, vars] = createTheme({
+  color: {
+    primary: "#C4B5FD",
+  },
+});
+
 export const highlighted = style({
-  color: "#C4B5FD",
+  color: vars.color.primary,
 });
