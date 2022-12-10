@@ -37,16 +37,6 @@ const Home: NextPage = () => {
             description="Number-coded playing cards are used to estimate an item"
           />
         </div>
-        <Card
-          name="Bucket System"
-          description="User stories (items) are placed within buckets (columns)"
-          unavailable
-        />
-        <Card
-          name="Three-Point Method"
-          description="User stories (items) are estimated using a three-point method"
-          unavailable
-        />
       </div>
       {modalOpen ? (
         <Modal

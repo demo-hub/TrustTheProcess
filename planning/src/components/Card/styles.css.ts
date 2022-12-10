@@ -9,6 +9,10 @@ export const container = style({
   borderRadius: "0.25rem",
   borderWidth: "2px",
   borderColor: "#6B7280",
+
+  ":hover": {
+    scale: 1.1,
+  },
 });
 
 export const unavailableCard = style({

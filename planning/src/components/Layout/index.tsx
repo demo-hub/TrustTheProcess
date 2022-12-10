@@ -1,4 +1,3 @@
-import TopNavbar from "@components/TopNavbar";
 import Head from "next/head";
 import { main } from "./styles.css";
 
@@ -16,7 +15,6 @@ const Layout = ({ children }: { children: JSX.Element }) => {
         ></script>
       </Head>
 
-      <TopNavbar />
       <main className={main}>{children}</main>
     </>
   );
