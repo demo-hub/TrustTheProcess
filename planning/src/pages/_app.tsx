@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import type { AppRouter } from "../server/router";
+import { themeClass } from "../styles/globals.css";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -13,9 +14,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <div className={themeClass}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </div>
     </SessionProvider>
   );
 };
