@@ -1,13 +1,23 @@
-import styles from "./index.module.css";
 import { type NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Head from "next/head";
+import styles from "./index.module.css";
 
+import router from "next/router";
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
+  const roomMutation = trpc.room.createRoom.useMutation();
+
+  const createRoom = async () => {
+    // Create a public room with trpc
+    const room = await roomMutation.mutateAsync({
+      name: "My new room",
+    });
+
+    // Redirect to the room
+    router.push(`/room/${room.id}`);
+  };
 
   return (
     <>
@@ -19,36 +29,15 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <div className={styles.container}>
           <h1 className={styles.title}>
-            Create <span className={styles.pinkSpan}>T3</span> App
+            Trust The <span className={styles.pinkSpan}>Process</span>
           </h1>
-          <div className={styles.cardRow}>
-            <Link
-              className={styles.card}
-              href="https://create.t3.gg/en/usage/first-steps"
-              target="_blank"
-            >
-              <h3 className={styles.cardTitle}>First Steps →</h3>
-              <div className={styles.cardText}>
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
-              </div>
-            </Link>
-            <Link
-              className={styles.card}
-              href="https://create.t3.gg/en/introduction"
-              target="_blank"
-            >
-              <h3 className={styles.cardTitle}>Documentation →</h3>
-              <div className={styles.cardText}>
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
-              </div>
-            </Link>
+          <div className={styles.cardRow} onClick={() => createRoom()}>
+            <div className={styles.card}>
+              <h3 className={styles.cardTitle}>Create new room</h3>
+              <div className={styles.cardText}>Create a new public room</div>
+            </div>
           </div>
           <div className={styles.showcaseContainer}>
-            <p className={styles.showcaseText}>
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
             <AuthShowcase />
           </div>
         </div>
@@ -64,7 +53,7 @@ const AuthShowcase: React.FC = () => {
 
   const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(
     undefined, // no input
-    { enabled: sessionData?.user !== undefined },
+    { enabled: sessionData?.user !== undefined }
   );
 
   return (
