@@ -1,5 +1,6 @@
 import type { Room } from "@prisma/client";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import styles from "./room.module.css";
 
 export const getServerSideProps: GetServerSideProps<{
   room: Room | null | undefined;
@@ -22,7 +23,13 @@ export const getServerSideProps: GetServerSideProps<{
 const RoomPage = ({
   room,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  return <p>{room?.name}</p>;
+  return (
+    <div className={styles.container}>
+      <h1 className={styles.title}>
+        <span className={styles.pinkSpan}>{room?.name}</span>
+      </h1>
+    </div>
+  );
 };
 
 export default RoomPage;
