@@ -33,7 +33,7 @@ const Home: NextPage = () => {
           </h1>
           <div className={styles.cardRow} onClick={() => createRoom()}>
             <div className={styles.card}>
-              <h3 className={styles.cardTitle}>Create new room</h3>
+              <h3 className={styles.cardTitle}>Create new room →</h3>
               <div className={styles.cardText}>Create a new public room</div>
             </div>
           </div>
