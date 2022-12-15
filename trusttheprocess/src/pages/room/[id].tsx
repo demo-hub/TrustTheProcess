@@ -1,6 +1,8 @@
 import { Card, CardBody, SimpleGrid, Text } from "@chakra-ui/react";
 import type { Room } from "@prisma/client";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { useEffect } from "react";
+import { io } from "socket.io-client";
 import styles from "./room.module.css";
 
 // Fibonacci sequence
@@ -27,6 +29,19 @@ export const getServerSideProps: GetServerSideProps<{
 const RoomPage = ({
   room,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  useEffect(() => {
+    socketInitializer();
+  }, []);
+
+  const socketInitializer = async () => {
+    await fetch("/api/socket");
+    const socket = io();
+
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
