@@ -57,4 +57,12 @@
     color: hsl(280 100% 70%);
   }
   
+  .card {
+    cursor: pointer;
+  }
+
+  .card:hover {
+    transform: scale(1.1);
+    background-color: hsl(280 100% 97%);
+  }
   

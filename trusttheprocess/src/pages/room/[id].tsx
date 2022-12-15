@@ -1,6 +1,10 @@
+import { Card, CardBody, SimpleGrid, Text } from "@chakra-ui/react";
 import type { Room } from "@prisma/client";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import styles from "./room.module.css";
+
+// Fibonacci sequence
+const FIBONACCI = [1, 2, 3, 5, 8, 13, 21, 34];
 
 export const getServerSideProps: GetServerSideProps<{
   room: Room | null | undefined;
@@ -28,6 +32,23 @@ const RoomPage = ({
       <h1 className={styles.title}>
         <span className={styles.pinkSpan}>{room?.name}</span>
       </h1>
+
+      <SimpleGrid spacing={4} templateColumns="repeat(4, minmax(160px, 1fr))">
+        {FIBONACCI.map((num) => (
+          <Card
+            key={num}
+            variant="filled"
+            align="center"
+            className={styles.card}
+          >
+            <CardBody>
+              <Text fontSize="4xl" color="hsl(280 100% 70%)" as="b">
+                {num}
+              </Text>
+            </CardBody>
+          </Card>
+        ))}
+      </SimpleGrid>
     </div>
   );
 };
