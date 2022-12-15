@@ -1,8 +1,9 @@
 import { Card, CardBody, SimpleGrid, Text } from "@chakra-ui/react";
-import type { Room } from "@prisma/client";
+import type { Room, RoomSessions } from "@prisma/client";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { io } from "socket.io-client";
+import { uuid } from "uuidv4";
 import styles from "./room.module.css";
 
 // Fibonacci sequence
@@ -29,18 +30,35 @@ export const getServerSideProps: GetServerSideProps<{
 const RoomPage = ({
   room,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  useEffect(() => {
-    socketInitializer();
-  }, []);
-
-  const socketInitializer = async () => {
+  const socketInitializer = useCallback(async () => {
     await fetch("/api/socket");
     const socket = io();
 
     socket.on("connect", () => {
-      console.log("connected");
+      console.log("Connected to socket.io");
     });
-  };
+
+    // Get user id from local storage
+    const userId = sessionStorage.getItem("userId");
+
+    if (!userId) {
+      // Set a random user id in local storage
+      sessionStorage.setItem("userId", uuid());
+    }
+
+    socket.emit("room-connection", {
+      userId: userId,
+      roomId: room?.id,
+    });
+
+    socket.on("update-users", (users: RoomSessions[] | undefined) => {
+      console.log("update-users", users);
+    });
+  }, [room?.id]);
+
+  useEffect(() => {
+    socketInitializer();
+  }, [socketInitializer]);
 
   return (
     <div className={styles.container}>

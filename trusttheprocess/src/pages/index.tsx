@@ -3,9 +3,21 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "./index.module.css";
 
 import router from "next/router";
+import { useEffect } from "react";
+import { uuid } from "uuidv4";
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
+  useEffect(() => {
+    // Get user id from local storage
+    const userId = sessionStorage.getItem("userId");
+
+    if (!userId) {
+      // Set a random user id in local storage
+      sessionStorage.setItem("userId", uuid());
+    }
+  }, []);
+
   const roomMutation = trpc.room.createRoom.useMutation();
 
   const createRoom = async () => {
