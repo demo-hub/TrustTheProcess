@@ -65,4 +65,13 @@
     transform: scale(1.1);
     background-color: hsl(280 100% 97%);
   }
-  
+
+  .users {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .avatarName {
+    display: flex;
+    align-items: center;
+  }

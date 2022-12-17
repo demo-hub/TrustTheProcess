@@ -1,7 +1,7 @@
-import { Card, CardBody, SimpleGrid, Text } from "@chakra-ui/react";
+import { Avatar, Card, CardBody, SimpleGrid, Text } from "@chakra-ui/react";
 import type { Room, RoomSessions } from "@prisma/client";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { uuid } from "uuidv4";
 import styles from "./room.module.css";
@@ -27,9 +27,76 @@ export const getServerSideProps: GetServerSideProps<{
   };
 };
 
+// Function to generate random usernames
+const generateUsername = (): string => {
+  const adjectives = [
+    "adorable",
+    "beautiful",
+    "clean",
+    "elegant",
+    "fancy",
+    "glamorous",
+    "handsome",
+    "long",
+    "magnificent",
+    "old-fashioned",
+    "plain",
+    "quaint",
+    "sparkling",
+    "ugliest",
+    "unsightly",
+    "wide-eyed",
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "gray",
+    "black",
+    "white",
+    "pink",
+  ];
+  const nouns = [
+    "cat",
+    "dog",
+    "horse",
+    "pig",
+    "cow",
+    "chicken",
+    "duck",
+    "goose",
+    "sheep",
+    "turkey",
+    "dove",
+    "raven",
+    "crow",
+    "sparrow",
+    "robin",
+    "cardinal",
+    "bluejay",
+    "oriole",
+    "pigeon",
+    "peacock",
+    "canary",
+    "finch",
+    "sparrow",
+    "meadowlark",
+    "woodpecker",
+    "wren",
+  ];
+
+  const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const noun = nouns[Math.floor(Math.random() * nouns.length)];
+
+  return `${adjective}-${noun}`;
+};
+
 const RoomPage = ({
   room,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [users, setUsers] = useState<RoomSessions[] | undefined>([]);
+
   const socketInitializer = useCallback(async () => {
     await fetch("/api/socket");
     const socket = io();
@@ -52,7 +119,7 @@ const RoomPage = ({
     });
 
     socket.on("update-users", (users: RoomSessions[] | undefined) => {
-      console.log("update-users", users);
+      setUsers(users);
     });
   }, [room?.id]);
 
@@ -65,6 +132,21 @@ const RoomPage = ({
       <h1 className={styles.title}>
         <span className={styles.pinkSpan}>{room?.name}</span>
       </h1>
+
+      <div className={styles.users}>
+        {users?.map((user) => (
+          <div key={user.id} className={styles.avatarName}>
+            <Avatar
+              name={user.userId}
+              src={`https://avatars.dicebear.com/api/avataaars/${user.id}.svg`}
+              size="xl"
+            />
+            <Text fontSize="xl" color="hsl(280 100% 70%)" as="b">
+              {generateUsername()}
+            </Text>
+          </div>
+        ))}
+      </div>
 
       <SimpleGrid spacing={4} templateColumns="repeat(4, minmax(160px, 1fr))">
         {FIBONACCI.map((num) => (
