@@ -23,7 +23,7 @@ const Home: NextPage = () => {
   const createRoom = async () => {
     // Create a public room with trpc
     const room = await roomMutation.mutateAsync({
-      name: "My new room",
+      name: "",
     });
 
     // Redirect to the room

@@ -141,7 +141,15 @@ const RoomPage = ({
               src={`https://avatars.dicebear.com/api/avataaars/${user.id}.svg`}
               size="xl"
             />
-            <Text fontSize="xl" color="hsl(280 100% 70%)" as="b">
+            <Text
+              fontSize="xl"
+              color={
+                user.userId === sessionStorage.getItem("userId")
+                  ? "hsl(280 100% 70%)"
+                  : "white"
+              }
+              as="b"
+            >
               {generateUsername()}
             </Text>
           </div>
