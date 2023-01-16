@@ -119,7 +119,18 @@ const RoomPage = ({
     });
 
     socket.on("update-users", (users: RoomSessions[] | undefined) => {
-      setUsers(users);
+      const currentUser = users?.find(
+        (u) => u.userId === sessionStorage.getItem("userId")
+      );
+
+      const invitees = users?.filter(
+        (u) => u.userId !== sessionStorage.getItem("userId")
+      );
+
+      setUsers([
+        currentUser || { id: "", userId: "", roomId: "" },
+        ...(invitees || []),
+      ]);
     });
   }, [room?.id]);
 
