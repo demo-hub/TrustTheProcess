@@ -1,7 +1,9 @@
 import { Avatar, Card, CardBody, SimpleGrid, Text } from "@chakra-ui/react";
 import type { Room, RoomSessions } from "@prisma/client";
+import type { DefaultEventsMap } from "@socket.io/component-emitter";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useCallback, useEffect, useState } from "react";
+import type { Socket } from "socket.io-client";
 import { io } from "socket.io-client";
 import { uuid } from "uuidv4";
 import styles from "./room.module.css";
@@ -92,16 +94,19 @@ const generateUsername = (): string => {
   return `${adjective}-${noun}`;
 };
 
+let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
+
 const RoomPage = ({
   room,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [users, setUsers] = useState<RoomSessions[] | undefined>([]);
+  const [vote, setVote] = useState<number | undefined>(undefined);
 
   const socketInitializer = useCallback(async () => {
     await fetch("/api/socket");
-    const socket = io();
+    socket = io();
 
-    socket.on("connect", () => {
+    socket?.on("connect", () => {
       console.log("Connected to socket.io");
     });
 
@@ -113,12 +118,12 @@ const RoomPage = ({
       sessionStorage.setItem("userId", uuid());
     }
 
-    socket.emit("room-connection", {
+    socket?.emit("room-connection", {
       userId: userId,
       roomId: room?.id,
     });
 
-    socket.on("update-users", (users: RoomSessions[] | undefined) => {
+    socket?.on("update-users", (users: RoomSessions[] | undefined) => {
       const currentUser = users?.find(
         (u) => u.userId === sessionStorage.getItem("userId")
       );
@@ -132,7 +137,30 @@ const RoomPage = ({
         ...(invitees || []),
       ]);
     });
+
+    socket?.on(
+      "update-vote",
+      (msg: { roomId: string; userId: string; vote: number }) => {
+        // Only update the vote if the message is for the current room and user
+        if (
+          msg.roomId !== room?.id ||
+          msg.userId !== sessionStorage.getItem("userId")
+        ) {
+          return;
+        }
+
+        setVote(msg.vote);
+      }
+    );
   }, [room?.id]);
+
+  const voting = (num: number) => {
+    socket?.emit("vote", {
+      userId: sessionStorage.getItem("userId"),
+      roomId: room?.id,
+      vote: num,
+    });
+  };
 
   useEffect(() => {
     socketInitializer();
@@ -173,7 +201,12 @@ const RoomPage = ({
             key={num}
             variant="filled"
             align="center"
-            className={styles.card}
+            className={
+              styles.card + " " + (num === vote ? styles.highlightedCard : "")
+            }
+            onClick={() => {
+              voting(num);
+            }}
           >
             <CardBody>
               <Text fontSize="4xl" color="hsl(280 100% 70%)" as="b">

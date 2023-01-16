@@ -38,6 +38,13 @@ const socket = async (req: NextApiRequest, res: any) => {
           socket.broadcast.emit("update-users", users);
         }
       );
+
+      socket.on(
+        "vote",
+        (msg: { roomId: string; userId: string; vote: number }) => {
+          socket.broadcast.emit("update-vote", msg);
+        }
+      );
     });
   }
 
