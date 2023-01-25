@@ -128,8 +128,13 @@ const RoomPage = ({
         (u) => u.userId === sessionStorage.getItem("userId")
       );
 
-      const invitees = users?.filter(
+      let invitees = users?.filter(
         (u) => u.userId !== sessionStorage.getItem("userId")
+      );
+
+      // Remove duplicate users
+      invitees = invitees?.filter(
+        (v, i, a) => a.map((mapObj) => mapObj.userId).indexOf(v.userId) === i
       );
 
       setUsers([
