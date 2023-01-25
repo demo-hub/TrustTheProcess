@@ -1,6 +1,71 @@
 import { type NextApiRequest } from "next";
 import { Server } from "socket.io";
 
+// Function to generate random usernames
+const generateUsername = (): string => {
+  const adjectives = [
+    "adorable",
+    "beautiful",
+    "clean",
+    "elegant",
+    "fancy",
+    "glamorous",
+    "handsome",
+    "long",
+    "magnificent",
+    "old-fashioned",
+    "plain",
+    "quaint",
+    "sparkling",
+    "ugliest",
+    "unsightly",
+    "wide-eyed",
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "gray",
+    "black",
+    "white",
+    "pink",
+  ];
+  const nouns = [
+    "cat",
+    "dog",
+    "horse",
+    "pig",
+    "cow",
+    "chicken",
+    "duck",
+    "goose",
+    "sheep",
+    "turkey",
+    "dove",
+    "raven",
+    "crow",
+    "sparrow",
+    "robin",
+    "cardinal",
+    "bluejay",
+    "oriole",
+    "pigeon",
+    "peacock",
+    "canary",
+    "finch",
+    "sparrow",
+    "meadowlark",
+    "woodpecker",
+    "wren",
+  ];
+
+  const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const noun = nouns[Math.floor(Math.random() * nouns.length)];
+
+  return `${adjective}-${noun}`;
+};
+
 const socket = async (req: NextApiRequest, res: any) => {
   if (!res.socket?.server.io) {
     const io = new Server(res.socket.server);
@@ -24,6 +89,7 @@ const socket = async (req: NextApiRequest, res: any) => {
               data: {
                 roomId: msg.roomId,
                 userId: msg.userId,
+                userName: generateUsername(),
               },
             });
           }

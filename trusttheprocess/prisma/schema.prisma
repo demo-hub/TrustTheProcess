@@ -73,8 +73,9 @@ model Room {
 }
 
 model RoomSessions {
-  id     String @id @default(cuid())
-  room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  roomId String
-  userId String
+  id       String  @id @default(cuid())
+  room     Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId   String
+  userId   String
+  userName String?
 }

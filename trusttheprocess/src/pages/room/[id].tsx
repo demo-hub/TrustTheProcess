@@ -138,7 +138,7 @@ const RoomPage = ({
       );
 
       setUsers([
-        currentUser || { id: "", userId: "", roomId: "" },
+        currentUser || { id: "", name: "", userId: "", roomId: "" },
         ...(invitees || []),
       ]);
     });
@@ -194,7 +194,7 @@ const RoomPage = ({
               }
               as="b"
             >
-              {generateUsername()}
+              {user.userName}
             </Text>
           </div>
         ))}
