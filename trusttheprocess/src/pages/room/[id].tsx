@@ -138,7 +138,7 @@ const RoomPage = ({
       );
 
       setUsers([
-        currentUser || { id: "", name: "", userId: "", roomId: "" },
+        currentUser || { id: "", userName: "", userId: "", roomId: "" },
         ...(invitees || []),
       ]);
     });
