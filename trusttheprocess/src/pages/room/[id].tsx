@@ -1,4 +1,11 @@
-import { Avatar, Card, CardBody, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardBody,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
 import type { Room, RoomSessions } from "@prisma/client";
 import type { DefaultEventsMap } from "@socket.io/component-emitter";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -29,78 +36,15 @@ export const getServerSideProps: GetServerSideProps<{
   };
 };
 
-// Function to generate random usernames
-const generateUsername = (): string => {
-  const adjectives = [
-    "adorable",
-    "beautiful",
-    "clean",
-    "elegant",
-    "fancy",
-    "glamorous",
-    "handsome",
-    "long",
-    "magnificent",
-    "old-fashioned",
-    "plain",
-    "quaint",
-    "sparkling",
-    "ugliest",
-    "unsightly",
-    "wide-eyed",
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "blue",
-    "purple",
-    "gray",
-    "black",
-    "white",
-    "pink",
-  ];
-  const nouns = [
-    "cat",
-    "dog",
-    "horse",
-    "pig",
-    "cow",
-    "chicken",
-    "duck",
-    "goose",
-    "sheep",
-    "turkey",
-    "dove",
-    "raven",
-    "crow",
-    "sparrow",
-    "robin",
-    "cardinal",
-    "bluejay",
-    "oriole",
-    "pigeon",
-    "peacock",
-    "canary",
-    "finch",
-    "sparrow",
-    "meadowlark",
-    "woodpecker",
-    "wren",
-  ];
-
-  const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-  const noun = nouns[Math.floor(Math.random() * nouns.length)];
-
-  return `${adjective}-${noun}`;
-};
-
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
 const RoomPage = ({
   room,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [users, setUsers] = useState<RoomSessions[] | undefined>([]);
-  const [vote, setVote] = useState<number | undefined>(undefined);
+  const [userVotes, setUserVotes] = useState<
+    { vote: number; userId: string }[]
+  >([]);
 
   const socketInitializer = useCallback(async () => {
     await fetch("/api/socket");
@@ -146,15 +90,23 @@ const RoomPage = ({
     socket?.on(
       "update-vote",
       (msg: { roomId: string; userId: string; vote: number }) => {
-        // Only update the vote if the message is for the current room and user
-        if (
-          msg.roomId !== room?.id ||
-          msg.userId !== sessionStorage.getItem("userId")
-        ) {
+        // Only update the vote if the message is for the current room
+        if (msg.roomId !== room?.id) {
           return;
         }
 
-        setVote(msg.vote);
+        // Update the user's vote
+        setUserVotes((prev) => {
+          const userVote = prev.find((u) => u.userId === msg.userId);
+
+          if (userVote) {
+            userVote.vote = msg.vote;
+          } else {
+            prev.push({ userId: msg.userId, vote: msg.vote });
+          }
+
+          return [...prev];
+        });
       }
     );
   }, [room?.id]);
@@ -185,17 +137,30 @@ const RoomPage = ({
               src={`https://avatars.dicebear.com/api/avataaars/${user.id}.svg`}
               size="xl"
             />
-            <Text
-              fontSize="xl"
-              color={
-                user.userId === sessionStorage.getItem("userId")
-                  ? "hsl(280 100% 70%)"
-                  : "white"
-              }
-              as="b"
-            >
-              {user.userName}
-            </Text>
+            <Box>
+              <Text
+                fontSize="xl"
+                color={
+                  user.userId === sessionStorage.getItem("userId")
+                    ? "hsl(280 100% 70%)"
+                    : "white"
+                }
+                as="b"
+              >
+                {user.userName}
+              </Text>
+              <Text
+                color={
+                  !userVotes.find((v) => v.userId === user.userId)
+                    ? "hsl(280 100% 70%)"
+                    : "white"
+                }
+              >
+                {!userVotes.find((v) => v.userId === user.userId)
+                  ? "Voting..."
+                  : "Ready!"}
+              </Text>
+            </Box>
           </div>
         ))}
       </div>
@@ -207,7 +172,14 @@ const RoomPage = ({
             variant="filled"
             align="center"
             className={
-              styles.card + " " + (num === vote ? styles.highlightedCard : "")
+              styles.card +
+              " " +
+              (num ===
+              userVotes.find(
+                (v) => v.userId === sessionStorage.getItem("userId")
+              )?.vote
+                ? styles.highlightedCard
+                : "")
             }
             onClick={() => {
               voting(num);
