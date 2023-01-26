@@ -4,6 +4,7 @@ import {
   Card,
   CardBody,
   SimpleGrid,
+  Stack,
   Text,
 } from "@chakra-ui/react";
 import type { Room, RoomSessions } from "@prisma/client";
@@ -128,7 +129,6 @@ const RoomPage = ({
       <h1 className={styles.title}>
         <span className={styles.pinkSpan}>{room?.name}</span>
       </h1>
-
       <div className={styles.users}>
         {users?.map((user) => (
           <div key={user.id} className={styles.avatarName}>
@@ -164,35 +164,64 @@ const RoomPage = ({
           </div>
         ))}
       </div>
-
       <SimpleGrid spacing={4} templateColumns="repeat(4, minmax(160px, 1fr))">
-        {FIBONACCI.map((num) => (
-          <Card
-            key={num}
-            variant="filled"
-            align="center"
-            className={
-              styles.card +
-              " " +
-              (num ===
-              userVotes.find(
-                (v) => v.userId === sessionStorage.getItem("userId")
-              )?.vote
-                ? styles.highlightedCard
-                : "")
-            }
-            onClick={() => {
-              voting(num);
-            }}
-          >
-            <CardBody>
-              <Text fontSize="4xl" color="hsl(280 100% 70%)" as="b">
-                {num}
-              </Text>
-            </CardBody>
-          </Card>
-        ))}
+        {users?.length === userVotes.length
+          ? userVotes.map((userVote) => (
+              <Stack spacing={4} key={userVote.userId}>
+                <Card
+                  variant="filled"
+                  align="center"
+                  className={
+                    userVote.userId === sessionStorage.getItem("userId")
+                      ? styles.highlightedCard
+                      : ""
+                  }
+                >
+                  <CardBody>
+                    <Text fontSize="4xl" color="hsl(280 100% 70%)" as="b">
+                      {userVote.vote}
+                    </Text>
+                  </CardBody>
+                </Card>
+                <Text
+                  color={
+                    userVote.userId === sessionStorage.getItem("userId")
+                      ? "hsl(280 100% 70%)"
+                      : "white"
+                  }
+                >
+                  {users.find((u) => u.userId === userVote.userId)?.userName}
+                </Text>
+              </Stack>
+            ))
+          : FIBONACCI.map((num) => (
+              <Card
+                key={num}
+                variant="filled"
+                align="center"
+                className={
+                  styles.card +
+                  " " +
+                  (num ===
+                  userVotes.find(
+                    (v) => v.userId === sessionStorage.getItem("userId")
+                  )?.vote
+                    ? styles.highlightedCard
+                    : "")
+                }
+                onClick={() => {
+                  voting(num);
+                }}
+              >
+                <CardBody>
+                  <Text fontSize="4xl" color="hsl(280 100% 70%)" as="b">
+                    {num}
+                  </Text>
+                </CardBody>
+              </Card>
+            ))}
       </SimpleGrid>
+      )
     </div>
   );
 };

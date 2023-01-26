@@ -24,6 +24,7 @@ const Home: NextPage = () => {
     // Create a public room with trpc
     const room = await roomMutation.mutateAsync({
       name: "",
+      userId: sessionStorage.getItem("userId"),
     });
 
     // Redirect to the room

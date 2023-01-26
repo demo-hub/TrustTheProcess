@@ -65,11 +65,12 @@ model VerificationToken {
 }
 
 model Room {
-  id           String         @id @default(cuid())
-  name         String?
-  owner        User?          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  ownerId      String?
-  RoomSessions RoomSessions[]
+  id              String         @id @default(cuid())
+  name            String?
+  owner           User?          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId         String?
+  anonymousUserId String?
+  RoomSessions    RoomSessions[]
 }
 
 model RoomSessions {
